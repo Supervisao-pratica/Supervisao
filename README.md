@@ -1,2 +1,2 @@
-# Supervis-o-da-Pr-tica
+# Supervisao
 Site para controle da supervisão da prática profissional
