@@ -478,7 +478,7 @@
             <!-- ABA: FLUXOGRAMA -->
             <div id="view-fluxograma" class="timeline-container timeline-line hidden-section">
                 
-                <!-- Arte 1: Decreto N° 11.479 (Link Correto) -->
+                <!-- Arte 1: Decreto N° 11.479 -->
                 <a href="https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2023/Decreto/D11479.htm" target="_blank" class="timeline-art art-1">
                     <div class="art-content">
                         <div class="art-title">DECRETO Nº 11.479,</div>
@@ -491,34 +491,85 @@
                 
                 <div class="phase-badge"><span class="phase-blue"><span>Fase 1: Acesso & Planejamento</span></span></div>
 
-                <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Acesso ao BlackBoard</h3><p>Acesse o portal através do link oficial.</p></div>
-                    <div class="step-number">1</div><div class="empty-space"></div>
+                <!-- NOVA ETAPA 1: SELEÇÃO DE REGIÃO -->
+                <!-- Layout modificado: Número acima da caixa -->
+                <div class="timeline-step" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 50px;">
+                    <div class="step-number" style="margin-bottom: 20px;">1</div>
+                    <div class="step-content border-left-orange" style="width: 55%; float: none;">
+                        <h3 style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--senac-orange);"></i> Selecione a sua região
+                        </h3>
+                        <p style="margin-bottom: 15px;">Escolha a unidade abaixo para acessar sua planilha de planejamento no SharePoint.</p>
+                        
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <select id="fluxo-region-select" class="region-select" style="margin-bottom: 0; flex-grow: 1;">
+                                <option value="" disabled selected>-- Selecione --</option>
+                                <option value="campo_mourao">Campo Mourão</option>
+                                <option value="francisco_beltrao">Francisco Beltrão</option>
+                                <option value="guarapuava">Guarapuava</option>
+                                <option value="umuarama">Umuarama</option>
+                            </select>
+                            <button onclick="accessRegionSpreadsheet()" class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 0.9rem;">
+                                Acessar <i class="fas fa-external-link-alt" style="margin-left: 5px;"></i>
+                            </button>
+                        </div>
+                        <p id="region-access-msg" style="font-size: 0.75rem; color: #666; margin-top: 8px; font-style: italic; display: none;"></p>
+                    </div>
                 </div>
+
+                <!-- NOVA ETAPA 2: AVISO MACROS -->
                 <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number bg-orange">2</div>
-                    <div class="step-content border-right-blue"><h3>Material de Apoio</h3><p>Clique na aba “Material de apoio”.</p></div>
+                    <div class="empty-space"></div>
+                    <div class="step-number bg-orange">2</div>
+                    <div class="step-content border-right-blue">
+                        <h3><i class="fas fa-desktop"></i> Execução no Desktop</h3>
+                        <p>Ao acessar a planilha da sua região, selecione a opção para executá-la no desktop. Dessa forma, as macros serão ativadas e as abas de planejamento funcionarão de maneira automatizada.</p>
+                    </div>
                 </div>
+
+                <!-- ETAPA 3: DOWNLOAD DOCUMENTOS (COM DROPDOWN) -->
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Download de Documentos</h3><p>Baixar documentos necessários.</p></div>
-                    <div class="step-number">3</div><div class="empty-space"></div>
+                    <div class="step-content border-left-orange">
+                        <h3><i class="fas fa-cloud-download-alt"></i> Download de Documentos</h3>
+                        <p style="margin-bottom: 10px;">Selecione o documento necessário e clique em baixar.</p>
+                        
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <select id="fluxo-doc-select" class="region-select" style="margin-bottom: 0; flex-grow: 1; font-size: 0.85rem; padding: 8px;">
+                                <option value="" disabled selected>-- Escolha um arquivo --</option>
+                                <option value="documentos/manual_simplificado.pdf">Manual simplificado</option>
+                                <option value="documentos/guia_preenchimento.pdf">Guia de Preenchimento</option>
+                                <option value="documentos/instrucao_completa.pdf">Instrução Completa</option>
+                                <option value="documentos/lista_tip.pdf">Lista TIP (Horizontal)</option>
+                                <option value="documentos/os_veiculo.pdf">OS - Veículo Próprio</option>
+                                <option value="documentos/formulario_supervisao.docx">Formulário Supervisão 2025</option>
+                                <option value="documentos/ata_programa.docx">ATA - Programa Aprendizagem</option>
+                                <option value="documentos/capa_controle.pdf">Capa de Controle</option>
+                            </select>
+                            <button onclick="downloadSelectedDoc()" class="btn-primary" style="width: auto; padding: 8px 15px; font-size: 0.85rem; background-color: var(--senac-blue);">
+                                Baixar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="step-number">3</div>
+                    <div class="empty-space"></div>
                 </div>
+
+                <!-- ETAPA 4: PLANILHA DE PLANEJAMENTO (ANTIGA 4) -->
                 <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number bg-orange">4</div>
-                    <div class="step-content border-right-blue"><h3>Região de Atuação</h3><p>Clique na aba da sua região.</p></div>
+                    <div class="empty-space"></div>
+                    <div class="step-number bg-orange">4</div>
+                    <div class="step-content border-right-blue"><h3>Planilha de Planejamento</h3><p>Acesse “Planilha de planejamento – região”.</p></div>
                 </div>
+                
+                <!-- ETAPA 5: CONFIGURAÇÃO (ANTIGA 5) -->
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Planilha de Planejamento</h3><p>Acesse “Planilha de planejamento – região”.</p></div>
+                    <div class="step-content border-left-orange"><h3>Configuração da Planilha</h3><p>Leia a aba “Avisos” e renomeie as abas.</p></div>
                     <div class="step-number">5</div><div class="empty-space"></div>
-                </div>
-                <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number bg-orange">6</div>
-                    <div class="step-content border-right-blue"><h3>Configuração da Planilha</h3><p>Leia a aba “Avisos” e renomeie as abas.</p></div>
                 </div>
 
                 <div class="phase-badge"><span class="phase-orange"><span>Fase 2: Logística</span></span></div>
                 
-                <!-- Arte 2: Lei n° 10.097 (Link Correto) -->
+                <!-- Arte 2: Lei n° 10.097 -->
                 <a href="https://www.planalto.gov.br/ccivil_03/LEIS/L10097.htm" target="_blank" class="timeline-art art-2">
                     <div class="art-content">
                         <div class="art-title">Lei nº 10.097</div>
@@ -529,38 +580,44 @@
                 </a>
                 
                 <div class="timeline-step">
-                    <div class="step-content border-left-blue"><h3>Montar Logística</h3><p>Montar logística na aba de planejamento.</p></div>
-                    <div class="step-number bg-orange">7</div><div class="empty-space"></div>
+                    <div class="empty-space"></div>
+                    <div class="step-number bg-orange">6</div> <!-- Era 7 -->
+                    <div class="step-content border-right-blue"><h3>Montar Logística</h3><p>Montar logística na aba de planejamento.</p></div>
                 </div>
                 <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number">8</div>
-                    <div class="step-content border-right-orange"><h3>Aprovação</h3><p>Avisar ao Polo-PR e aguardar.</p></div>
+                    <div class="step-content border-left-orange"><h3>Aprovação</h3><p>Avisar ao Polo-PR e aguardar.</p></div>
+                    <div class="step-number">7</div> <!-- Era 8 -->
+                    <div class="empty-space"></div>
                 </div>
                 <div class="timeline-step">
-                    <div class="step-content border-left-blue"><h3>Abertura de Viagem</h3><p>Pedido para abertura de viagem.</p></div>
-                    <div class="step-number bg-orange">9</div><div class="empty-space"></div>
+                    <div class="empty-space"></div>
+                    <div class="step-number bg-orange">8</div> <!-- Era 9 -->
+                    <div class="step-content border-right-blue"><h3>Abertura de Viagem</h3><p>Pedido para abertura de viagem.</p></div>
                 </div>
                 <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number">10</div>
-                    <div class="step-content border-right-orange"><h3>Confirmação</h3><p>Enviar e-mails aos supervisores.</p></div>
+                    <div class="step-content border-left-orange"><h3>Confirmação</h3><p>Enviar e-mails aos supervisores.</p></div>
+                    <div class="step-number">9</div> <!-- Era 10 -->
+                    <div class="empty-space"></div>
                 </div>
 
                 <div class="phase-badge"><span class="phase-green"><span>Fase 3: Execução</span></span></div>
 
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange">
+                    <div class="empty-space"></div>
+                    <div class="step-number">10</div> <!-- Era 11 -->
+                    <div class="step-content border-right-blue">
                         <h3>Baixar Formulário</h3>
                         <p>Acesse a aba <strong>"Documentos"</strong>.</p>
                         <button onclick="switchTab('documentos')" class="link-btn">Ir para Documentos &rarr;</button>
                     </div>
-                    <div class="step-number">11</div><div class="empty-space"></div>
                 </div>
                 <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number bg-orange">12</div>
-                    <div class="step-content border-right-blue"><h3>Preenchimento</h3><p>Preencher cabeçalho do formulário.</p></div>
+                    <div class="step-content border-left-orange"><h3>Preenchimento</h3><p>Preencher cabeçalho do formulário.</p></div>
+                    <div class="step-number bg-orange">11</div> <!-- Era 12 -->
+                    <div class="empty-space"></div>
                 </div>
                 
-                <!-- Arte 3: Portaria MTE N° 3.872 (Link Correto) -->
+                <!-- Arte 3: Portaria MTE N° 3.872 -->
                 <a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/aprendizagem-profissional" target="_blank" class="timeline-art art-3">
                     <div class="art-content">
                         <div class="art-title" style="font-size: 1.2rem;">PORTARIA MTE Nº 3.872,</div>
@@ -570,7 +627,7 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Coat_of_arms_of_Brazil.svg" class="art-coat" alt="Brasão">
                 </a>
 
-                 <!-- Arte 4: Lista TIP (Atualizada conforme solicitação) -->
+                 <!-- Arte 4: Lista TIP -->
                  <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2008/decreto/d6481.htm" target="_blank" class="timeline-art art-4">
                     <div class="art-content">
                         <div class="art-title" style="font-size: 1.2rem;">LISTA TIP</div>
@@ -580,37 +637,62 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Coat_of_arms_of_Brazil.svg" class="art-coat" alt="Brasão">
                 </a>
                 
+                <!-- ETAPA 12: RELATÓRIO DE DESEMPENHO (COM DROPDOWN) -->
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Relatório de Desempenho</h3><p>Consultar relatório antes da visita.</p></div>
-                    <div class="step-number">13</div><div class="empty-space"></div>
+                    <div class="empty-space"></div>
+                    <div class="step-number">12</div>
+                    <div class="step-content border-right-blue">
+                        <h3>Relatório de Desempenho</h3>
+                        <p style="margin-bottom: 10px;">Selecione a região para consultar o relatório:</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+                             <select id="relatorio-region-select" class="region-select" style="margin-bottom: 0; flex-grow: 1; font-size: 0.85rem; padding: 8px;">
+                                <option value="" disabled selected>-- Selecione --</option>
+                                <option value="campo_mourao">Campo Mourão</option>
+                                <option value="francisco_beltrao">Francisco Beltrão</option>
+                                <option value="guarapuava">Guarapuava</option>
+                                <option value="umuarama">Umuarama</option>
+                            </select>
+                            <button onclick="accessPerformanceReport()" class="btn-primary" style="width: auto; padding: 8px 15px; font-size: 0.85rem; background-color: var(--senac-blue);">
+                                Acessar
+                            </button>
+                        </div>
+                         <p id="relatorio-access-msg" style="font-size: 0.75rem; color: #666; margin-top: 8px; font-style: italic; display: none; text-align: right;"></p>
+                    </div>
                 </div>
+
                 <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number bg-orange">14</div>
-                    <div class="step-content border-right-blue"><h3>A Entrevista</h3><p>Entrevista com supervisor e estudante.</p></div>
+                    <div class="step-content border-left-orange"><h3>A Entrevista</h3><p>Entrevista com supervisor e estudante.</p></div>
+                    <div class="step-number bg-orange">13</div> <!-- Era 14 -->
+                    <div class="empty-space"></div>
                 </div>
 
                 <div class="phase-badge"><span class="phase-green"><span>Fase 4: Finalização</span></span></div>
                 <div class="timeline-step">
-                    <div class="step-content border-left-green">
+                    <div class="empty-space"></div>
+                    <div class="step-number">14</div> <!-- Era 15 -->
+                    <div class="step-content border-right-green">
                         <h3>Digitalizar + Enviar</h3>
                         <p>Digitalizar (Turma + Nome). Enviar no AVA.</p>
                         <button onclick="openUploadModal()" class="link-btn" style="color: var(--senac-green); background-color: #dcfce7; margin-top: 10px; width: 100%; justify-content: center;">
                             <i class="fas fa-upload" style="margin-right: 5px;"></i> Enviar Arquivos
                         </button>
                     </div>
-                    <div class="step-number">15</div><div class="empty-space"></div>
                 </div>
                 <div class="timeline-step">
-                    <div class="empty-space"></div><div class="step-number bg-orange">16</div>
-                    <div class="step-content border-right-green"><h3>Registro na Planilha</h3><p>Preencher dados pós-visita na planilha.</p></div>
+                    <div class="step-content border-left-green"><h3>Registro na Planilha</h3><p>Preencher dados pós-visita na planilha.</p></div>
+                    <div class="step-number bg-orange">15</div> <!-- Era 16 -->
+                    <div class="empty-space"></div>
                 </div>
+
+                <!-- ETAPA 16: CONCLUSÃO (MOVIDA PARA DIREITA) -->
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange" style="background-color: #eff6ff;">
+                    <div class="empty-space"></div>
+                    <div class="step-number bg-green">16</div>
+                    <div class="step-content border-right-orange" style="background-color: #eff6ff;">
                         <h3>Conclusão</h3>
                         <p>Sinalizar ao Polo-PR.</p>
                         <p style="color: var(--senac-green); font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-top: 5px;">Processo Finalizado</p>
                     </div>
-                    <div class="step-number bg-green">17</div><div class="empty-space"></div>
                 </div>
             </div>
 
@@ -953,6 +1035,98 @@
                 if (h4) {
                     cards[i].style.display = (h4.textContent.toUpperCase().indexOf(filter) > -1) ? "" : "none";
                 }
+            }
+        }
+
+        // --- NOVA FUNÇÃO PARA ACESSAR PLANILHAS (Etapa 1) ---
+        function accessRegionSpreadsheet() {
+            const regionSelect = document.getElementById('fluxo-region-select');
+            const region = regionSelect.value;
+            const msg = document.getElementById('region-access-msg');
+
+            const spreadsheets = {
+                'campo_mourao': {
+                    url: 'https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={4d4d9d28-18e8-43ad-8031-72c6b13be916}&action=embedview&wdAllowInteractivity=False&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0',
+                    contact: 'Luciano Ramos (luciano.ramos@docente.pr.senac.br)'
+                },
+                'francisco_beltrao': {
+                    url: 'https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={25529649-c755-45b7-a875-a23707ffd7bb}&action=embedview&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0',
+                    contact: 'Samoel Pitz (samoel.pitz@docente.pr.senac.br)'
+                },
+                'guarapuava': {
+                    url: 'https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={5d1d386c-f1cf-41d2-8997-1ac56b37f657}&action=embedview&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0',
+                    contact: 'Michelly Gronkoski (michelly.gronkoski@docente.pr.senac.br)'
+                },
+                'umuarama': {
+                    url: 'https://senacpr-my.sharepoint.com/', 
+                    contact: 'Responsável Regional'
+                }
+            };
+
+            if (region && spreadsheets[region]) {
+                const data = spreadsheets[region];
+                msg.style.display = 'block';
+                msg.innerHTML = `Gestor do acesso: ${data.contact}`;
+                setTimeout(() => {
+                    window.open(data.url, '_blank');
+                }, 800);
+            } else {
+                alert("Por favor, selecione uma região válida.");
+            }
+        }
+
+        // --- NOVA FUNÇÃO PARA ACESSAR RELATÓRIO DE DESEMPENHO (Etapa 12) ---
+        function accessPerformanceReport() {
+            const regionSelect = document.getElementById('relatorio-region-select');
+            const region = regionSelect.value;
+            const msg = document.getElementById('relatorio-access-msg');
+
+            const reports = {
+                'campo_mourao': {
+                    url: 'https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={ca8dbe4f-36ab-44c3-98cd-ff5cc7844e41}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0',
+                    contact: 'Luciano Ramos (luciano.ramos@docente.pr.senac.br)'
+                },
+                'francisco_beltrao': {
+                    url: 'https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={f3c19804-d04d-4dda-bdec-2f1ef0046129}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0',
+                    contact: 'Samoel Pitz (samoel.pitz@docente.pr.senac.br)'
+                },
+                'guarapuava': {
+                    url: 'https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={7ce26397-6f96-4462-9771-d3c65a1914ac}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0',
+                    contact: 'Michelly Gronkoski (michelly.gronkoski@docente.pr.senac.br)'
+                },
+                'umuarama': {
+                    url: 'https://senacpr-my.sharepoint.com/', 
+                    contact: 'Responsável Regional'
+                }
+            };
+
+            if (region && reports[region]) {
+                const data = reports[region];
+                msg.style.display = 'block';
+                msg.innerHTML = `Gestor do acesso: ${data.contact}`;
+                setTimeout(() => {
+                    window.open(data.url, '_blank');
+                }, 800);
+            } else {
+                alert("Por favor, selecione uma região para ver o relatório.");
+            }
+        }
+
+        // --- NOVA FUNÇÃO PARA DOWNLOAD DE DOCUMENTOS (DROPDOWN) ---
+        function downloadSelectedDoc() {
+            const docSelect = document.getElementById('fluxo-doc-select');
+            const selectedDoc = docSelect.value;
+
+            if (selectedDoc) {
+                const link = document.createElement('a');
+                link.href = selectedDoc;
+                link.target = '_blank';
+                link.download = selectedDoc.split('/').pop();
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert("Por favor, selecione um documento para baixar.");
             }
         }
 
