@@ -595,23 +595,36 @@
                 </div>
             </div>
 
-            <!-- ABA: DADOS (DASHBOARD) - RESTAURADA PARA O TAMANHO ANTERIOR -->
+            <!-- ABA: DADOS (DASHBOARD) -->
             <div id="view-dados" class="hidden-section">
                 <div class="welcome-card" style="text-align: center;">
                     <i class="fas fa-chart-pie" style="font-size: 4rem; color: var(--senac-blue); margin-bottom: 20px;"></i>
                     <h2 style="color: var(--senac-dark-blue); margin-bottom: 10px;">Painel de Dados</h2>
                     <p style="color: #666; margin-bottom: 30px;">Total de Jovens Ativos por Região</p>
                     
-                    <!-- ÁREA DE INCORPORAÇÃO (IFRAME) - Restaurado para 604x384 e sem os parâmetros de recorte -->
-                    <div style="display: flex; justify-content: center; overflow: hidden; background: #fafafa; border-radius: 8px; border: 1px solid #eee; padding: 20px;">
-                        <iframe 
-                            width="604" 
-                            height="384" 
-                            frameborder="0" 
-                            scrolling="no" 
-                            style="max-width: 100%;" 
-                            src="https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={8f2f76bc-bce9-4d13-9a15-4e652295c5d4}&action=embedview&wdAllowInteractivity=False&Item=Gr%C3%A1fico%201&wdHideSheetTabs=True">
-                        </iframe>
+                    <!-- ÁREA DE INCORPORAÇÃO (IFRAME) -->
+                    <div style="display: flex; flex-direction: column; align-items: center; background: #fafafa; border-radius: 8px; border: 1px solid #eee; padding: 20px;">
+                        <!-- IFRAME RESTAURADO -->
+                        <div style="overflow: hidden; max-width: 100%;">
+                            <iframe 
+                                width="604" 
+                                height="384" 
+                                frameborder="0" 
+                                scrolling="no" 
+                                style="max-width: 100%;" 
+                                src="https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={8f2f76bc-bce9-4d13-9a15-4e652295c5d4}&action=embedview&wdAllowInteractivity=False&Item=Gr%C3%A1fico%201&wdHideSheetTabs=True">
+                            </iframe>
+                        </div>
+
+                        <!-- BOTÃO DE EMERGÊNCIA / PLANO B -->
+                        <div style="margin-top: 25px; border-top: 1px solid #ddd; padding-top: 20px; width: 100%; max-width: 600px;">
+                            <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
+                                <i class="fas fa-info-circle"></i> O gráfico não apareceu? Pode ser necessário permissão de acesso.
+                            </p>
+                            <a href="https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={8f2f76bc-bce9-4d13-9a15-4e652295c5d4}&action=embedview&wdAllowInteractivity=False&Item=Gr%C3%A1fico%201" target="_blank" class="btn-primary" style="display: inline-flex; width: auto; padding: 10px 25px; background-color: var(--senac-blue);">
+                                <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i> Abrir Gráfico em Nova Guia
+                            </a>
+                        </div>
                     </div>
 
                 </div>
