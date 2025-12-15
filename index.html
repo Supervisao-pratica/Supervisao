@@ -168,11 +168,21 @@
         .phase-orange span { background: var(--senac-orange); }
         .phase-green span { background: var(--senac-green); }
         .timeline-step { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; position: relative; }
+        
+        /* Passo clicável */
         .step-content {
             width: 45%; background: white; padding: 20px; border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 1; transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 1; transition: all 0.2s;
+            cursor: pointer; /* Indica que é clicável */
         }
-        .step-content:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        /* Efeito Hover no card */
+        .step-content:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 30px rgba(0,69,135,0.15); /* Sombra azulada suave */
+            border-color: var(--senac-orange);
+        }
+        .step-content:active { transform: translateY(0); }
+
         .step-content h3 { color: var(--senac-blue); font-size: 1.125rem; margin-bottom: 5px; }
         .step-content p { font-size: 0.875rem; color: #4b5563; }
         .step-number {
@@ -200,14 +210,14 @@
         .link-btn:hover { background-color: #dbeafe; }
 
         /* =========================================
-           ARTES "SOLTAS" (BANNERS) - AJUSTADOS
+           ARTES "SOLTAS" (BANNERS)
            ========================================= */
         .timeline-art {
             position: absolute;
             z-index: 5;
             width: 250px; 
             height: auto;
-            min-height: 200px; /* Altura flexível */
+            min-height: 200px;
             background: var(--senac-blue);
             color: white;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -216,88 +226,68 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 25px 20px; /* Padding interno */
+            padding: 25px 20px;
             transition: transform 0.3s;
             font-family: 'Roboto', 'Arial', sans-serif;
             text-decoration: none !important;
             cursor: pointer;
-            border-left: 6px solid var(--senac-orange); /* Borda laranja discreta em vez de faixa grossa */
+            border-left: 6px solid var(--senac-orange);
         }
         .timeline-art:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 20; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         
-        /* Conteúdo interno do banner */
-        .art-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
-
-        /* Brasão (Mantido discreto no canto) */
-        .art-coat {
-            position: absolute;
-            bottom: -15px;
-            right: -10px;
-            width: 40px;
-            opacity: 0.3; /* Bem discreto para não brigar com texto */
-        }
-
-        .art-title {
-            font-weight: 900;
-            font-size: 1.1rem; /* Fonte reduzida conforme solicitado */
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            line-height: 1.2;
-            color: white;
-            text-align: left;
-        }
-        .art-subtitle {
-            font-weight: 700;
-            color: var(--senac-orange);
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            text-align: left;
-        }
-        .art-desc {
-            font-size: 0.8rem;
-            line-height: 1.4;
-            color: #e2e8f0;
-            font-weight: 300;
-            text-align: left;
-            margin-bottom: 10px;
-        }
+        .art-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .art-coat { position: absolute; bottom: -15px; right: -10px; width: 40px; opacity: 0.3; }
+        .art-title { font-weight: 900; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 5px; line-height: 1.2; color: white; text-align: left; }
+        .art-subtitle { font-weight: 700; color: var(--senac-orange); margin-bottom: 12px; font-size: 0.9rem; text-transform: uppercase; text-align: left; }
+        .art-desc { font-size: 0.8rem; line-height: 1.4; color: #e2e8f0; font-weight: 300; text-align: left; margin-bottom: 10px; }
         
-        /* Posicionamento - Mantido */
         .timeline-art.art-1 { top: 250px; left: -300px; transform: rotate(-7deg); }
         .timeline-art.art-2 { top: 750px; right: -300px; left: auto; transform: rotate(10deg); }
         .timeline-art.art-3 { top: 1300px; left: -300px; transform: rotate(-4deg); }
-        
-        /* NOVA ARTE (ART 4) */
-        .timeline-art.art-4 { 
-            top: 1850px; /* Posicionado mais abaixo da Art 3 */
-            right: -300px; /* No lado direito */
-            left: auto;
-            transform: rotate(5deg); 
-        }
+        .timeline-art.art-4 { top: 1850px; right: -300px; left: auto; transform: rotate(5deg); }
 
-        /* MODAL DE UPLOAD */
+        /* =========================================
+           MODAIS (UPLOAD e DETALHES DE ETAPA)
+           ========================================= */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: 1000;
             display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(5px);
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease;
         }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
         .modal-box {
             background: white; padding: 40px 30px; border-radius: 12px;
             width: 90%; max-width: 500px; position: relative;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            animation: slideUp 0.3s ease-out;
+            transform: translateY(20px); transition: transform 0.3s ease;
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-overlay.active .modal-box { transform: translateY(0); }
         
+        /* Modal Transparente/Glassmorphism para Explicação */
+        .modal-glass {
+            background: rgba(255, 255, 255, 0.85); /* Fundo branco semi-transparente */
+            backdrop-filter: blur(12px); /* Desfoque forte no fundo */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(0, 69, 135, 0.25);
+            padding: 40px;
+            border-radius: 16px;
+            width: 90%; max-width: 600px;
+            position: relative;
+            text-align: left;
+            transform: scale(0.95); transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-glass { transform: scale(1); }
+
+        .glass-header { margin-bottom: 20px; border-bottom: 2px solid var(--senac-orange); padding-bottom: 10px; }
+        .glass-title { color: var(--senac-blue); font-size: 1.8rem; font-weight: 900; margin: 0; }
+        .glass-subtitle { color: #666; font-size: 0.9rem; text-transform: uppercase; font-weight: bold; margin-top: 5px; }
+        .glass-content { font-size: 1.05rem; line-height: 1.6; color: #374151; }
+
         .close-modal-btn {
             position: absolute; top: 15px; right: 20px; font-size: 28px; color: #9ca3af;
             line-height: 1; transition: 0.2s;
@@ -491,17 +481,18 @@
                 
                 <div class="phase-badge"><span class="phase-blue"><span>Fase 1: Acesso & Planejamento</span></span></div>
 
-                <!-- NOVA ETAPA 1: SELEÇÃO DE REGIÃO -->
-                <!-- Layout modificado: Número acima da caixa -->
+                <!-- NOVA ETAPA 1: SELEÇÃO DE REGIÃO (INTERATIVO) -->
                 <div class="timeline-step" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 50px;">
                     <div class="step-number" style="margin-bottom: 20px;">1</div>
-                    <div class="step-content border-left-orange" style="width: 55%; float: none;">
+                    <!-- Adicionado onclick para abrir explicação -->
+                    <div class="step-content border-left-orange" style="width: 55%; float: none;" onclick="openStepInfo(1)">
                         <h3 style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-map-marker-alt" style="color: var(--senac-orange);"></i> Selecione a sua região
                         </h3>
                         <p style="margin-bottom: 15px;">Escolha a unidade abaixo para acessar sua planilha de planejamento no SharePoint.</p>
                         
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <!-- Evento stopPropagation para o clique no select/botão não abrir o modal de texto -->
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;" onclick="event.stopPropagation()">
                             <select id="fluxo-region-select" class="region-select" style="margin-bottom: 0; flex-grow: 1;">
                                 <option value="" disabled selected>-- Selecione --</option>
                                 <option value="campo_mourao">Campo Mourão</option>
@@ -521,29 +512,30 @@
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number bg-orange">2</div>
-                    <div class="step-content border-right-blue">
+                    <div class="step-content border-right-blue" onclick="openStepInfo(2)">
                         <h3><i class="fas fa-desktop"></i> Execução no Desktop</h3>
                         <p>Ao acessar a planilha da sua região, selecione a opção para executá-la no desktop. Dessa forma, as macros serão ativadas e as abas de planejamento funcionarão de maneira automatizada.</p>
                     </div>
                 </div>
 
-                <!-- ETAPA 3: DOWNLOAD DOCUMENTOS (COM DROPDOWN) -->
+                <!-- ETAPA 3: DOWNLOAD DOCUMENTOS (COM DROPDOWN) - LINKS CORRIGIDOS -->
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange">
+                    <div class="step-content border-left-orange" onclick="openStepInfo(3)">
                         <h3><i class="fas fa-cloud-download-alt"></i> Download de Documentos</h3>
                         <p style="margin-bottom: 10px;">Selecione o documento necessário e clique em baixar.</p>
                         
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;" onclick="event.stopPropagation()">
                             <select id="fluxo-doc-select" class="region-select" style="margin-bottom: 0; flex-grow: 1; font-size: 0.85rem; padding: 8px;">
                                 <option value="" disabled selected>-- Escolha um arquivo --</option>
-                                <option value="documentos/manual_simplificado.pdf">Manual simplificado</option>
-                                <option value="documentos/guia_preenchimento.pdf">Guia de Preenchimento</option>
-                                <option value="documentos/instrucao_completa.pdf">Instrução Completa</option>
-                                <option value="documentos/lista_tip.pdf">Lista TIP (Horizontal)</option>
-                                <option value="documentos/os_veiculo.pdf">OS - Veículo Próprio</option>
-                                <option value="documentos/formulario_supervisao.docx">Formulário Supervisão 2025</option>
-                                <option value="documentos/ata_programa.docx">ATA - Programa Aprendizagem</option>
-                                <option value="documentos/capa_controle.pdf">Capa de Controle</option>
+                                <!-- Removido 'documentos/' do value -->
+                                <option value="manual_simplificado.pdf">Manual simplificado</option>
+                                <option value="guia_preenchimento.pdf">Guia de Preenchimento</option>
+                                <option value="instrucao_completa.pdf">Instrução Completa</option>
+                                <option value="lista_tip.pdf">Lista TIP (Horizontal)</option>
+                                <option value="os_veiculo.pdf">OS - Veículo Próprio</option>
+                                <option value="formulario_supervisao.docx">Formulário Supervisão 2025</option>
+                                <option value="ata_programa.docx">ATA - Programa Aprendizagem</option>
+                                <option value="capa_controle.pdf">Capa de Controle</option>
                             </select>
                             <button onclick="downloadSelectedDoc()" class="btn-primary" style="width: auto; padding: 8px 15px; font-size: 0.85rem; background-color: var(--senac-blue);">
                                 Baixar
@@ -554,16 +546,16 @@
                     <div class="empty-space"></div>
                 </div>
 
-                <!-- ETAPA 4: PLANILHA DE PLANEJAMENTO (ANTIGA 4) -->
+                <!-- ETAPA 4: PLANILHA DE PLANEJAMENTO -->
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number bg-orange">4</div>
-                    <div class="step-content border-right-blue"><h3>Planilha de Planejamento</h3><p>Acesse “Planilha de planejamento – região”.</p></div>
+                    <div class="step-content border-right-blue" onclick="openStepInfo(4)"><h3>Planilha de Planejamento</h3><p>Acesse “Planilha de planejamento – região”.</p></div>
                 </div>
                 
-                <!-- ETAPA 5: CONFIGURAÇÃO (ANTIGA 5) -->
+                <!-- ETAPA 5: CONFIGURAÇÃO -->
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Configuração da Planilha</h3><p>Leia a aba “Avisos” e renomeie as abas.</p></div>
+                    <div class="step-content border-left-orange" onclick="openStepInfo(5)"><h3>Configuração da Planilha</h3><p>Leia a aba “Avisos” e renomeie as abas.</p></div>
                     <div class="step-number">5</div><div class="empty-space"></div>
                 </div>
 
@@ -581,22 +573,22 @@
                 
                 <div class="timeline-step">
                     <div class="empty-space"></div>
-                    <div class="step-number bg-orange">6</div> <!-- Era 7 -->
-                    <div class="step-content border-right-blue"><h3>Montar Logística</h3><p>Montar logística na aba de planejamento.</p></div>
+                    <div class="step-number bg-orange">6</div>
+                    <div class="step-content border-right-blue" onclick="openStepInfo(6)"><h3>Montar Logística</h3><p>Montar logística na aba de planejamento.</p></div>
                 </div>
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Aprovação</h3><p>Avisar ao Polo-PR e aguardar.</p></div>
-                    <div class="step-number">7</div> <!-- Era 8 -->
+                    <div class="step-content border-left-orange" onclick="openStepInfo(7)"><h3>Aprovação</h3><p>Avisar ao Polo-PR e aguardar.</p></div>
+                    <div class="step-number">7</div> 
                     <div class="empty-space"></div>
                 </div>
                 <div class="timeline-step">
                     <div class="empty-space"></div>
-                    <div class="step-number bg-orange">8</div> <!-- Era 9 -->
-                    <div class="step-content border-right-blue"><h3>Abertura de Viagem</h3><p>Pedido para abertura de viagem.</p></div>
+                    <div class="step-number bg-orange">8</div> 
+                    <div class="step-content border-right-blue" onclick="openStepInfo(8)"><h3>Abertura de Viagem</h3><p>Pedido para abertura de viagem.</p></div>
                 </div>
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Confirmação</h3><p>Enviar e-mails aos supervisores.</p></div>
-                    <div class="step-number">9</div> <!-- Era 10 -->
+                    <div class="step-content border-left-orange" onclick="openStepInfo(9)"><h3>Confirmação</h3><p>Enviar e-mails aos supervisores.</p></div>
+                    <div class="step-number">9</div> 
                     <div class="empty-space"></div>
                 </div>
 
@@ -604,16 +596,16 @@
 
                 <div class="timeline-step">
                     <div class="empty-space"></div>
-                    <div class="step-number">10</div> <!-- Era 11 -->
-                    <div class="step-content border-right-blue">
+                    <div class="step-number">10</div> 
+                    <div class="step-content border-right-blue" onclick="openStepInfo(10)">
                         <h3>Baixar Formulário</h3>
                         <p>Acesse a aba <strong>"Documentos"</strong>.</p>
-                        <button onclick="switchTab('documentos')" class="link-btn">Ir para Documentos &rarr;</button>
+                        <button onclick="switchTab('documentos'); event.stopPropagation();" class="link-btn">Ir para Documentos &rarr;</button>
                     </div>
                 </div>
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>Preenchimento</h3><p>Preencher cabeçalho do formulário.</p></div>
-                    <div class="step-number bg-orange">11</div> <!-- Era 12 -->
+                    <div class="step-content border-left-orange" onclick="openStepInfo(11)"><h3>Preenchimento</h3><p>Preencher cabeçalho do formulário.</p></div>
+                    <div class="step-number bg-orange">11</div> 
                     <div class="empty-space"></div>
                 </div>
                 
@@ -641,10 +633,10 @@
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number">12</div>
-                    <div class="step-content border-right-blue">
+                    <div class="step-content border-right-blue" onclick="openStepInfo(12)">
                         <h3>Relatório de Desempenho</h3>
                         <p style="margin-bottom: 10px;">Selecione a região para consultar o relatório:</p>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;" onclick="event.stopPropagation()">
                              <select id="relatorio-region-select" class="region-select" style="margin-bottom: 0; flex-grow: 1; font-size: 0.85rem; padding: 8px;">
                                 <option value="" disabled selected>-- Selecione --</option>
                                 <option value="campo_mourao">Campo Mourão</option>
@@ -661,26 +653,26 @@
                 </div>
 
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange"><h3>A Entrevista</h3><p>Entrevista com supervisor e estudante.</p></div>
-                    <div class="step-number bg-orange">13</div> <!-- Era 14 -->
+                    <div class="step-content border-left-orange" onclick="openStepInfo(13)"><h3>A Entrevista</h3><p>Entrevista com supervisor e estudante.</p></div>
+                    <div class="step-number bg-orange">13</div> 
                     <div class="empty-space"></div>
                 </div>
 
                 <div class="phase-badge"><span class="phase-green"><span>Fase 4: Finalização</span></span></div>
                 <div class="timeline-step">
                     <div class="empty-space"></div>
-                    <div class="step-number">14</div> <!-- Era 15 -->
-                    <div class="step-content border-right-green">
+                    <div class="step-number">14</div> 
+                    <div class="step-content border-right-green" onclick="openStepInfo(14)">
                         <h3>Digitalizar + Enviar</h3>
                         <p>Digitalizar (Turma + Nome). Enviar no AVA.</p>
-                        <button onclick="openUploadModal()" class="link-btn" style="color: var(--senac-green); background-color: #dcfce7; margin-top: 10px; width: 100%; justify-content: center;">
+                        <button onclick="openUploadModal(); event.stopPropagation();" class="link-btn" style="color: var(--senac-green); background-color: #dcfce7; margin-top: 10px; width: 100%; justify-content: center;">
                             <i class="fas fa-upload" style="margin-right: 5px;"></i> Enviar Arquivos
                         </button>
                     </div>
                 </div>
                 <div class="timeline-step">
-                    <div class="step-content border-left-green"><h3>Registro na Planilha</h3><p>Preencher dados pós-visita na planilha.</p></div>
-                    <div class="step-number bg-orange">15</div> <!-- Era 16 -->
+                    <div class="step-content border-left-green" onclick="openStepInfo(15)"><h3>Registro na Planilha</h3><p>Preencher dados pós-visita na planilha.</p></div>
+                    <div class="step-number bg-orange">15</div> 
                     <div class="empty-space"></div>
                 </div>
 
@@ -688,7 +680,7 @@
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number bg-green">16</div>
-                    <div class="step-content border-right-orange" style="background-color: #eff6ff;">
+                    <div class="step-content border-right-orange" style="background-color: #eff6ff;" onclick="openStepInfo(16)">
                         <h3>Conclusão</h3>
                         <p>Sinalizar ao Polo-PR.</p>
                         <p style="color: var(--senac-green); font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-top: 5px;">Processo Finalizado</p>
@@ -730,7 +722,7 @@
                 </div>
             </div>
 
-            <!-- ABA: DOCUMENTOS -->
+            <!-- ABA: DOCUMENTOS - LINKS CORRIGIDOS (REMOVIDO 'documentos/') -->
             <div id="view-documentos" class="hidden-section">
                 <div class="search-bar-container">
                     <h2 style="color: var(--senac-blue); font-size: 1.5rem; font-weight: bold;">Central de Documentos</h2>
@@ -746,7 +738,7 @@
                             <div class="icon-box ib-blue"><i class="fas fa-book"></i></div>
                             <div class="doc-info">
                                 <h4>Manual simplificado</h4><p>Diretrizes gerais.</p>
-                                <a href="documentos/manual_simplificado.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="manual_simplificado.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -755,7 +747,7 @@
                             <div class="icon-box ib-blue"><i class="fas fa-list-check"></i></div>
                             <div class="doc-info">
                                 <h4>Guia de Preenchimento</h4><p>Passo a passo rápido.</p>
-                                <a href="documentos/guia_preenchimento.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="guia_preenchimento.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -764,7 +756,7 @@
                             <div class="icon-box ib-blue"><i class="fas fa-info-circle"></i></div>
                             <div class="doc-info">
                                 <h4>Instrução Completa</h4><p>Detalhes técnicos.</p>
-                                <a href="documentos/instrucao_completa.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="instrucao_completa.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -773,7 +765,7 @@
                             <div class="icon-box ib-blue"><i class="fas fa-clipboard-list"></i></div>
                             <div class="doc-info">
                                 <h4>Lista TIP (Horizontal)</h4><p>Referência atualizada.</p>
-                                <a href="documentos/lista_tip.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="lista_tip.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -782,7 +774,7 @@
                             <div class="icon-box ib-blue"><i class="fas fa-car"></i></div>
                             <div class="doc-info">
                                 <h4>OS - Veículo Próprio</h4><p>Ordem de serviço.</p>
-                                <a href="documentos/os_veiculo.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="os_veiculo.pdf" target="_blank" class="download-link">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -795,7 +787,7 @@
                             <div class="icon-box ib-orange"><i class="fas fa-file-word"></i></div>
                             <div class="doc-info">
                                 <h4>Formulário Supervisão 2025</h4><p>Obrigatório.</p>
-                                <a href="documentos/formulario_supervisao.docx" target="_blank" class="download-link text-orange-hover">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="formulario_supervisao.docx" target="_blank" class="download-link text-orange-hover">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -805,7 +797,7 @@
                             <div class="icon-box ib-orange"><i class="fas fa-file-word"></i></div>
                             <div class="doc-info">
                                 <h4>ATA - Programa Aprendizagem</h4><p>Inclui manual.</p>
-                                <a href="documentos/ata_programa.docx" target="_blank" class="download-link text-orange-hover">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="ata_programa.docx" target="_blank" class="download-link text-orange-hover">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -815,7 +807,7 @@
                             <div class="icon-box ib-orange"><i class="fas fa-folder"></i></div>
                             <div class="doc-info">
                                 <h4>Capa de Controle</h4><p>Organização física.</p>
-                                <a href="documentos/capa_controle.pdf" target="_blank" class="download-link text-orange-hover">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
+                                <a href="capa_controle.pdf" target="_blank" class="download-link text-orange-hover">Baixar Arquivo <i class="fas fa-download" style="margin-left: 5px;"></i></a>
                             </div>
                         </div>
                     </div>
@@ -946,12 +938,10 @@
                 <option value="francisco_beltrao">Francisco Beltrão</option>
                 <option value="guarapuava">Guarapuava</option>
                 <option value="umuarama">Umuarama</option>
-                <!-- Adicione mais opções conforme suas pastas -->
             </select>
 
             <div class="upload-area">
                 <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 10px;"></i>
-                <!-- Instrução adicional sobre o link externo -->
                 <p style="margin-bottom: 5px; color: #374151; font-weight: bold;">Upload Seguro</p>
                 <p style="margin-bottom: 15px; font-size: 0.9rem; color: #6b7280;">
                     Ao clicar no botão abaixo, você será redirecionado para a pasta segura da sua região.
@@ -961,6 +951,20 @@
             <button class="btn-primary" onclick="openUploadForm()" style="margin-top: 10px;">
                 <i class="fas fa-external-link-alt"></i> Acessar Pasta de Envio
             </button>
+        </div>
+    </div>
+
+    <!-- JANELA/MODAL PARA DETALHES DA ETAPA (NOVO) -->
+    <div id="step-detail-modal" class="modal-overlay">
+        <div class="modal-glass">
+            <button class="close-modal-btn" onclick="closeStepInfo()">&times;</button>
+            <div class="glass-header">
+                <h2 id="step-modal-title" class="glass-title">Título da Etapa</h2>
+                <div id="step-modal-subtitle" class="glass-subtitle">Fase do Processo</div>
+            </div>
+            <div id="step-modal-content" class="glass-content">
+                <!-- Conteúdo inserido via JS -->
+            </div>
         </div>
     </div>
 
@@ -1038,7 +1042,23 @@
             }
         }
 
-        // --- NOVA FUNÇÃO PARA ACESSAR PLANILHAS (Etapa 1) ---
+        // --- FUNÇÕES DE MODAL DE UPLOAD ---
+        function openUploadModal() { document.getElementById('upload-modal').classList.add('active'); }
+        function closeUploadModal() { document.getElementById('upload-modal').classList.remove('active'); }
+        
+        function openUploadForm() {
+            const linksPorRegiao = {
+                'campo_mourao': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgCtlUZaS1ViSqqd-LfwfAhUASl6_V1-GxHrAnWGuUj2BXo',
+                'francisco_beltrao': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgA7auw4MZNYSbw2kUanBtuHAav-cBusC4wCelholjwhFKA',
+                'guarapuava': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgB1-VVBjcpATae_CCqK4Bu9AdXZ09snZQ9uL2ZQKhnK_kw',
+                'umuarama': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgCbQHxgU9rESphEFu8dbcXLAUB3tXkeaiwl972MD1LNgac'
+            };
+            const regiao = document.getElementById('region-select').value;
+            if (regiao && linksPorRegiao[regiao]) { window.open(linksPorRegiao[regiao], '_blank'); closeUploadModal(); }
+            else { alert("Selecione uma região válida."); }
+        }
+
+        // --- ACESSAR PLANILHAS (Etapa 1) ---
         function accessRegionSpreadsheet() {
             const regionSelect = document.getElementById('fluxo-region-select');
             const region = regionSelect.value;
@@ -1075,7 +1095,7 @@
             }
         }
 
-        // --- NOVA FUNÇÃO PARA ACESSAR RELATÓRIO DE DESEMPENHO (Etapa 12) ---
+        // --- ACESSAR RELATÓRIO (Etapa 12) ---
         function accessPerformanceReport() {
             const regionSelect = document.getElementById('relatorio-region-select');
             const region = regionSelect.value;
@@ -1112,11 +1132,10 @@
             }
         }
 
-        // --- NOVA FUNÇÃO PARA DOWNLOAD DE DOCUMENTOS (DROPDOWN) ---
+        // --- DOWNLOAD DOCUMENTOS (Etapa 3) ---
         function downloadSelectedDoc() {
             const docSelect = document.getElementById('fluxo-doc-select');
             const selectedDoc = docSelect.value;
-
             if (selectedDoc) {
                 const link = document.createElement('a');
                 link.href = selectedDoc;
@@ -1129,23 +1148,122 @@
                 alert("Por favor, selecione um documento para baixar.");
             }
         }
-
-        function openUploadModal() { document.getElementById('upload-modal').classList.remove('hidden-section'); }
-        function closeUploadModal() { document.getElementById('upload-modal').classList.add('hidden-section'); }
-
-        function openUploadForm() {
-            const linksPorRegiao = {
-                'campo_mourao': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgCtlUZaS1ViSqqd-LfwfAhUASl6_V1-GxHrAnWGuUj2BXo',
-                'francisco_beltrao': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgA7auw4MZNYSbw2kUanBtuHAav-cBusC4wCelholjwhFKA',
-                'guarapuava': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgB1-VVBjcpATae_CCqK4Bu9AdXZ09snZQ9uL2ZQKhnK_kw',
-                'umuarama': 'https://senacpr-my.sharepoint.com/:f:/g/personal/tutoria_aprendizagem_pr_senac_br/IgCbQHxgU9rESphEFu8dbcXLAUB3tXkeaiwl972MD1LNgac'
-            };
-            const regiao = document.getElementById('region-select').value;
-            if (regiao && linksPorRegiao[regiao]) { window.open(linksPorRegiao[regiao], '_blank'); closeUploadModal(); }
-            else { alert("Selecione uma região válida."); }
-        }
         
         document.getElementById('upload-modal').addEventListener('click', function(e) { if (e.target === this) closeUploadModal(); });
+
+        // ===============================================
+        // DADOS DAS ETAPAS (TEXTOS DESCRITIVOS)
+        // ===============================================
+        const stepData = {
+            1: {
+                title: "Seleção da Região",
+                subtitle: "Fase 1: Acesso Inicial",
+                text: "Nesta etapa, o supervisor deve identificar sua unidade de atuação (Campo Mourão, Francisco Beltrão, etc.). Ao selecionar e acessar, você será redirecionado para a planilha de gestão específica daquela região no SharePoint."
+            },
+            2: {
+                title: "Execução no Desktop",
+                subtitle: "Fase 1: Configuração Técnica",
+                text: "É fundamental abrir a planilha utilizando o aplicativo Excel instalado no computador (Modo Desktop), e não apenas no navegador. Isso garante que as macros de automação e scripts VBA funcionem corretamente para gerar relatórios e atualizar dados."
+            },
+            3: {
+                title: "Download de Documentos",
+                subtitle: "Fase 1: Materiais de Apoio",
+                text: "Aqui você encontra todos os arquivos padronizados necessários para o processo de supervisão. Certifique-se de baixar a versão mais recente dos manuais e formulários antes de iniciar as visitas."
+            },
+            4: {
+                title: "Planilha de Planejamento",
+                subtitle: "Fase 1: Organização",
+                text: "A planilha central onde todas as visitas são agendadas e monitoradas. Mantenha este documento sempre atualizado para que a coordenação regional possa acompanhar o progresso em tempo real."
+            },
+            5: {
+                title: "Configuração das Abas",
+                subtitle: "Fase 1: Setup",
+                text: "Antes de inserir dados, verifique a aba 'Avisos' dentro da planilha para instruções de última hora. Renomeie as abas conforme a nomenclatura padrão (ex: Mês/Ano) para manter o histórico organizado."
+            },
+            6: {
+                title: "Montar Logística",
+                subtitle: "Fase 2: Roteirização",
+                text: "Planeje o roteiro de visitas agrupando empresas próximas geograficamente. Isso otimiza o tempo de deslocamento e reduz custos operacionais. Utilize ferramentas de mapa se necessário."
+            },
+            7: {
+                title: "Aprovação da Agenda",
+                subtitle: "Fase 2: Validação",
+                text: "Após montar o roteiro preliminar, envie para validação do Polo-PR ou coordenação imediata. Aguarde o 'De Acordo' antes de prosseguir com agendamentos definitivos."
+            },
+            8: {
+                title: "Abertura de Viagem",
+                subtitle: "Fase 2: Administrativo",
+                text: "Com a agenda aprovada, inicie o processo administrativo de solicitação de viagem (adiantamento, veículo, hospedagem) conforme as normas internas do Senac PR."
+            },
+            9: {
+                title: "Confirmação com Empresas",
+                subtitle: "Fase 2: Agendamento",
+                text: "Entre em contato com os supervisores nas empresas para confirmar data e hora. Envie e-mails formais de confirmação para registrar o compromisso."
+            },
+            10: {
+                title: "Formulário Específico",
+                subtitle: "Fase 3: Preparação",
+                text: "Certifique-se de ter em mãos (físico ou digital) o formulário de supervisão correto para o tipo de visita (acompanhamento, avaliação, técnica, etc.)."
+            },
+            11: {
+                title: "Preenchimento Inicial",
+                subtitle: "Fase 3: Dados Básicos",
+                text: "Para ganhar tempo durante a visita, preencha previamente o cabeçalho do formulário com os dados da empresa, do aluno e do contrato que você já possui no sistema."
+            },
+            12: {
+                title: "Relatório de Desempenho",
+                subtitle: "Fase 3: Análise Prévia",
+                text: "Consulte o dashboard de desempenho do aluno. Verifique notas, frequência e ocorrências anteriores para ter embasamento durante a conversa com o supervisor da empresa."
+            },
+            13: {
+                title: "A Entrevista",
+                subtitle: "Fase 3: Ação",
+                text: "O momento principal. Converse com o supervisor da empresa sobre a evolução do aluno e, em seguida, com o próprio aprendiz. Registre os pontos fortes e pontos de melhoria observados."
+            },
+            14: {
+                title: "Digitalização e Envio",
+                subtitle: "Fase 4: Documentação",
+                text: "Após a visita, digitalize o formulário assinado. Salve o arquivo seguindo o padrão de nomenclatura (Turma + Nome do Aluno) e faça o upload na pasta segura da região correspondente."
+            },
+            15: {
+                title: "Registro na Planilha",
+                subtitle: "Fase 4: Atualização de Status",
+                text: "Retorne à planilha de planejamento e atualize o status da visita para 'Realizada'. Insira observações sucintas sobre o resultado da supervisão."
+            },
+            16: {
+                title: "Conclusão do Ciclo",
+                subtitle: "Fase 4: Fechamento",
+                text: "Com todos os passos anteriores concluídos, sinalize ao Polo-PR o fechamento do ciclo de visitas do mês. O processo está finalizado!"
+            }
+        };
+
+        // --- FUNÇÕES DE MODAL DE DETALHES ---
+        function openStepInfo(stepId) {
+            const data = stepData[stepId];
+            if (data) {
+                document.getElementById('step-modal-title').innerText = data.title;
+                document.getElementById('step-modal-subtitle').innerText = data.subtitle;
+                document.getElementById('step-modal-content').innerText = data.text;
+                
+                document.getElementById('step-detail-modal').classList.add('active');
+            }
+        }
+
+        function closeStepInfo() {
+            document.getElementById('step-detail-modal').classList.remove('active');
+        }
+
+        // Fechar ao clicar fora
+        document.getElementById('step-detail-modal').addEventListener('click', function(e) {
+            if (e.target === this || e.target.classList.contains('modal-glass')) {
+                // Se clicar no overlay (fora da caixa), fecha. 
+                // Se clicar na caixa em si (modal-glass), não fecha (comportamento padrão de modals).
+                // Mas aqui o e.target === modal-glass pode ser tricky dependendo do padding.
+                // Melhor checar apenas overlay.
+            }
+             if (e.target === this) closeStepInfo();
+        });
+
     </script>
 </body>
 </html>
