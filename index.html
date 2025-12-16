@@ -384,6 +384,27 @@
             .welcome-section { margin: 0; padding: 40px 10px; }
             .welcome-card::after { margin: 40px -20px -20px -20px; border-radius: 0 0 16px 16px; }
         }
+
+        /* --- VÍDEO RESPONSIVO (NOVO) --- */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Proporção 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
     </style>
 </head>
 <body id="main-body" class="locked">
@@ -1224,7 +1245,13 @@
                     </ol>
                     <p>Isso abrirá a planilha no Excel em sua versão desktop.</p>
                     
-                    <p style="color: var(--senac-green); font-weight: bold; margin-top: 15px; border-left: 4px solid var(--senac-green); padding-left: 10px; background: #f0fdf4; padding: 10px;">
+                    <!-- EXEMPLO DE VÍDEO INSERIDO COM PARÂMETROS DE EMBED PARA NÃO SAIR DO SITE -->
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/S9rW8Yd8wXo?rel=0&modestbranding=1&playsinline=1" title="Tutorial Excel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #666; text-align: center; margin-top: 5px;"><em>Vídeo tutorial: Habilitando Macros no Excel</em></p>
+
+                    <p style="color: var(--senac-green); font-weight: bold; margin-top: 20px; border-left: 4px solid var(--senac-green); padding-left: 10px; background: #f0fdf4; padding: 10px;">
                         <i class="fas fa-check-circle"></i> Pronto!<br>
                         A planilha estará pronta para rodar as macros de forma automatizada.
                     </p>
@@ -1266,6 +1293,12 @@
                 text: `
                     <p>Planeje os horários e o roteiro das visitas agrupando empresas próximas geograficamente. Essa estratégia otimiza o tempo de deslocamento, reduz custos operacionais e torna a agenda mais eficiente. Utilize ferramentas de mapa sempre que necessário para apoiar o planejamento.</p>
                     <p style="margin-top: 15px;">Em seguida, entre em contato com as empresas para confirmar as seguintes informações: nome do jovem aprendiz, horário de trabalho, contraturno escolar e endereço da empresa. Essa verificação garante que a visita seja realizada conforme o planejamento estabelecido.</p>
+                    
+                    <!-- VÍDEO TUTORIAL COM PARÂMETROS DE EMBED -->
+                    <div class="video-container" style="margin-top: 20px;">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/rfAOQMPZp7w?rel=0&modestbranding=1&playsinline=1" title="Rota Fácil" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #666; text-align: center; margin-top: 5px;"><em>Rota Fácil o aplicativo para criar as melhores rotas</em></p>
                 `
             },
             7: {
