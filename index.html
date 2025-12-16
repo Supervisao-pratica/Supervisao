@@ -594,15 +594,28 @@
 
                 <div class="phase-badge"><span class="phase-green"><span>Fase 3: Execução</span></span></div>
 
+                <!-- ETAPA 10: FORMULÁRIO E ATA (ATUALIZADO) -->
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number">10</div> 
                     <div class="step-content border-right-blue" onclick="openStepInfo(10)">
-                        <h3>Baixar Formulário</h3>
-                        <p>Acesse a aba <strong>"Documentos"</strong>.</p>
-                        <button onclick="switchTab('documentos'); event.stopPropagation();" class="link-btn">Ir para Documentos &rarr;</button>
+                        <h3>Baixar Formulário e/ou ATA</h3>
+                        <p>Acesse a aba <strong>"Documentos"</strong> ou baixe clicando aqui:</p>
+                        
+                        <!-- Dropdown de Download Rápido -->
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;" onclick="event.stopPropagation()">
+                            <select id="step10-doc-select" class="region-select" style="margin-bottom: 0; flex-grow: 1; font-size: 0.85rem; padding: 8px;">
+                                <option value="" disabled selected>-- Selecione --</option>
+                                <option value="formulario_supervisao.docx">Formulário Supervisão 2025</option>
+                                <option value="ata_programa.docx">ATA - Programa Aprendizagem</option>
+                            </select>
+                            <button onclick="downloadStep10Doc()" class="btn-primary" style="width: auto; padding: 8px 15px; font-size: 0.85rem; background-color: var(--senac-blue);">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
                 <div class="timeline-step">
                     <div class="step-content border-left-orange" onclick="openStepInfo(11)"><h3>Preenchimento</h3><p>Preencher cabeçalho do formulário.</p></div>
                     <div class="step-number bg-orange">11</div> 
@@ -629,7 +642,7 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Coat_of_arms_of_Brazil.svg" class="art-coat" alt="Brasão">
                 </a>
                 
-                <!-- ETAPA 12: RELATÓRIO DE DESEMPENHO (COM DROPDOWN) -->
+                <!-- ETAPA 12: RELATÓRIO DE DESEMPENHO -->
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number">12</div>
@@ -676,11 +689,31 @@
                     <div class="empty-space"></div>
                 </div>
 
-                <!-- ETAPA 16: CONCLUSÃO (MOVIDA PARA DIREITA) -->
+                <!-- NOVA ETAPA 16: INFORMAÇÕES PARA RATEIO -->
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number bg-green">16</div>
-                    <div class="step-content border-right-orange" style="background-color: #eff6ff;" onclick="openStepInfo(16)">
+                    <div class="step-content border-right-green" onclick="openStepInfo(16)">
+                        <h3>Informações para Rateio</h3>
+                        <p>Atualizar informações de visitas.</p>
+                    </div>
+                </div>
+
+                <!-- NOVA ETAPA 17: ENVIO MALOTE (ESQUERDA) -->
+                <div class="timeline-step">
+                    <div class="step-content border-left-green" onclick="openStepInfo(17)">
+                        <h3>Envio Malote</h3>
+                        <p>Envio dos documentos via Malote</p>
+                    </div>
+                    <div class="step-number bg-orange">17</div>
+                    <div class="empty-space"></div>
+                </div>
+
+                <!-- ETAPA 18: CONCLUSÃO (ANTIGA 17 - MOVIDA PARA DIREITA) -->
+                <div class="timeline-step">
+                    <div class="empty-space"></div>
+                    <div class="step-number bg-green">18</div>
+                    <div class="step-content border-right-orange" style="background-color: #eff6ff;" onclick="openStepInfo(18)">
                         <h3>Conclusão</h3>
                         <p>Sinalizar ao Polo-PR.</p>
                         <p style="color: var(--senac-green); font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-top: 5px;">Processo Finalizado</p>
@@ -1148,6 +1181,23 @@
                 alert("Por favor, selecione um documento para baixar.");
             }
         }
+
+        // --- DOWNLOAD DOCUMENTOS (Etapa 10 - NOVO) ---
+        function downloadStep10Doc() {
+            const docSelect = document.getElementById('step10-doc-select');
+            const selectedDoc = docSelect.value;
+            if (selectedDoc) {
+                const link = document.createElement('a');
+                link.href = selectedDoc;
+                link.target = '_blank';
+                link.download = selectedDoc.split('/').pop();
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert("Por favor, selecione um arquivo (Formulário ou ATA).");
+            }
+        }
         
         document.getElementById('upload-modal').addEventListener('click', function(e) { if (e.target === this) closeUploadModal(); });
 
@@ -1163,7 +1213,37 @@
             2: {
                 title: "Execução no Desktop",
                 subtitle: "Fase 1: Configuração Técnica",
-                text: "É fundamental abrir a planilha utilizando o aplicativo Excel instalado no computador (Modo Desktop), e não apenas no navegador. Isso garante que as macros de automação e scripts VBA funcionem corretamente para gerar relatórios e atualizar dados."
+                text: `
+                    <p style="margin-bottom: 10px;"><strong>Como preparar a planilha para rodar as macros automatizadas:</strong></p>
+                    <ol style="margin-left: 20px; margin-bottom: 15px; line-height: 1.6;">
+                        <li>Abra a planilha da sua região.</li>
+                        <li>Clique em <strong>"Exibir pasta de trabalho em tela inteira"</strong> (ícone de duas janelas no canto inferior direito).</li>
+                        <li>Uma nova janela será aberta no Excel Online.</li>
+                        <li>No menu superior, clique em <strong>Exibição</strong>.</li>
+                        <li>Clique em <strong>"Abrir na área de trabalho"</strong>.</li>
+                    </ol>
+                    <p>Isso abrirá a planilha no Excel em sua versão desktop.</p>
+                    
+                    <p style="color: var(--senac-green); font-weight: bold; margin-top: 15px; border-left: 4px solid var(--senac-green); padding-left: 10px; background: #f0fdf4; padding: 10px;">
+                        <i class="fas fa-check-circle"></i> Pronto!<br>
+                        A planilha estará pronta para rodar as macros de forma automatizada.
+                    </p>
+
+                    <div class="warning-box" style="margin-top: 20px; display: block;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #c2410c;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
+                            <strong>! Atenção !</strong>
+                        </div>
+                        <p style="margin-bottom: 5px;">Caso apareça alguma mensagem de erro ao tentar rodar as macros, siga estas etapas:</p>
+                        <ol style="margin-left: 20px; margin-top: 5px;">
+                            <li>Clique em <strong>Arquivo</strong> no canto superior esquerdo.</li>
+                            <li>Selecione <strong>Central de Confiabilidade</strong>.</li>
+                            <li>Clique em <strong>Configurações da Central de Confiabilidade</strong>.</li>
+                            <li>Vá até <strong>Configurações de Macro</strong> e marque a opção <strong>“Habilitar macros VBA”</strong>.</li>
+                            <li>Clique em <strong>OK</strong> para confirmar.</li>
+                        </ol>
+                    </div>
+                `
             },
             3: {
                 title: "Download de Documentos",
@@ -1178,17 +1258,20 @@
             5: {
                 title: "Configuração das Abas",
                 subtitle: "Fase 1: Setup",
-                text: "Antes de inserir dados, verifique a aba 'Avisos' dentro da planilha para instruções de última hora. Renomeie as abas conforme a nomenclatura padrão (ex: Mês/Ano) para manter o histórico organizado."
+                text: "Antes de inserir dados, renomeie as abas conforme a nomenclatura padrão (ex: Cidade/Mês) para manter o histórico organizado."
             },
             6: {
                 title: "Montar Logística",
                 subtitle: "Fase 2: Roteirização",
-                text: "Planeje o roteiro de visitas agrupando empresas próximas geograficamente. Isso otimiza o tempo de deslocamento e reduz custos operacionais. Utilize ferramentas de mapa se necessário."
+                text: `
+                    <p>Planeje os horários e o roteiro das visitas agrupando empresas próximas geograficamente. Essa estratégia otimiza o tempo de deslocamento, reduz custos operacionais e torna a agenda mais eficiente. Utilize ferramentas de mapa sempre que necessário para apoiar o planejamento.</p>
+                    <p style="margin-top: 15px;">Em seguida, entre em contato com as empresas para confirmar as seguintes informações: nome do jovem aprendiz, horário de trabalho, contraturno escolar e endereço da empresa. Essa verificação garante que a visita seja realizada conforme o planejamento estabelecido.</p>
+                `
             },
             7: {
                 title: "Aprovação da Agenda",
                 subtitle: "Fase 2: Validação",
-                text: "Após montar o roteiro preliminar, envie para validação do Polo-PR ou coordenação imediata. Aguarde o 'De Acordo' antes de prosseguir com agendamentos definitivos."
+                text: "Após montar o roteiro preliminar, sinalize para o Polo-PR e Polo atuante e aguarde o 'De Acordo' antes de prosseguir com as visitas."
             },
             8: {
                 title: "Abertura de Viagem",
@@ -1198,17 +1281,17 @@
             9: {
                 title: "Confirmação com Empresas",
                 subtitle: "Fase 2: Agendamento",
-                text: "Entre em contato com os supervisores nas empresas para confirmar data e hora. Envie e-mails formais de confirmação para registrar o compromisso."
+                text: "Entre em contato com os supervisores nas empresas para confirmar data, hora, endereço, nome e horário do jovem e contraturno escolar. Envie e-mails formais de confirmação para registrar o compromisso."
             },
             10: {
-                title: "Formulário Específico",
+                title: "Formulário e/ou ATA",
                 subtitle: "Fase 3: Preparação",
-                text: "Certifique-se de ter em mãos (físico ou digital) o formulário de supervisão correto para o tipo de visita (acompanhamento, avaliação, técnica, etc.)."
+                text: "Certifique-se de ter em mãos o formulário de supervisão correto para a realização da visita. Caso necessário tenha em mãos a ATA para registro de situações que fogem do âmbito Formulário."
             },
             11: {
                 title: "Preenchimento Inicial",
                 subtitle: "Fase 3: Dados Básicos",
-                text: "Para ganhar tempo durante a visita, preencha previamente o cabeçalho do formulário com os dados da empresa, do aluno e do contrato que você já possui no sistema."
+                text: "Para otimizar o tempo durante a visita, preencha previamente o cabeçalho do formulário com os dados da empresa, do aprendiz, do curso, do supervisor e a data. Certifique-se de que todos os campos estejam devidamente preenchidos, evitando deixar informações em branco. Além disso, garanta que todas as vias do documento sejam assinadas pelos participantes, assegurando a validade e a conformidade do registro."
             },
             12: {
                 title: "Relatório de Desempenho",
@@ -1218,7 +1301,7 @@
             13: {
                 title: "A Entrevista",
                 subtitle: "Fase 3: Ação",
-                text: "O momento principal. Converse com o supervisor da empresa sobre a evolução do aluno e, em seguida, com o próprio aprendiz. Registre os pontos fortes e pontos de melhoria observados."
+                text: "Este é o momento central da visita. Converse inicialmente com o supervisor da empresa sobre a evolução do(a) aprendiz e, na sequência, com o próprio aprendiz. Registre de forma clara os pontos fortes, os pontos de melhoria e as situações ocorridas ao longo do período de prática. <br><br><strong>Lembre-se:</strong> sempre que necessário, utilize o documento <strong>ATA</strong> para formalizar os registros que fogem do âmbito Formulário."
             },
             14: {
                 title: "Digitalização e Envio",
@@ -1228,9 +1311,71 @@
             15: {
                 title: "Registro na Planilha",
                 subtitle: "Fase 4: Atualização de Status",
-                text: "Retorne à planilha de planejamento e atualize o status da visita para 'Realizada'. Insira observações sucintas sobre o resultado da supervisão."
+                text: "Retorne à planilha de planejamento e atualize o status da visita para 'Realizada', para efetuar o envio do e-mail de agradecimento e foto de registro da visita. Insira observações sucintas sobre o resultado da supervisão caso necessário na aba de dados gerais."
             },
             16: {
+                title: "Informações para Rateio",
+                subtitle: "Fase 4: Gestão e Controle",
+                text: `
+                    <p style="margin-bottom: 15px;">Após finalizar as visitas programadas, siga as orientações abaixo:</p>
+                    <p>Acesse a aba de planejamento da planilha e preencha todos os dados referentes ao dia de visitas.</p>
+                    
+                    <strong style="display:block; margin-top: 15px; color: var(--senac-blue);">Registre as seguintes informações:</strong>
+                    <ul style="margin-left: 20px; list-style-type: disc; margin-bottom: 20px;">
+                        <li>Data da visita;</li>
+                        <li>Cidades de deslocamento;</li>
+                        <li>Horários de cada visita realizada;</li>
+                        <li>Horário de almoço;</li>
+                        <li>Quilometragem (Km) percorrida entre as cidades visitadas;</li>
+                        <li>Valor de pedágio, se houver.</li>
+                    </ul>
+
+                    <div class="warning-box" style="border-left: 4px solid var(--senac-blue); background-color: #eff6ff; display: block;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: var(--senac-blue);">
+                            <i class="fas fa-info-circle" style="font-size: 1.2rem;"></i>
+                            <strong>Atenção à fidelidade das informações:</strong>
+                        </div>
+                        <p>Esses dados serão utilizados para o preenchimento das informações para fins de rateio. Por isso, é fundamental que todas as informações registradas estejam fidedignas à realidade.</p>
+                    </div>
+
+                    <p style="margin-top: 20px;"><strong>Após concluir o preenchimento:</strong></p>
+                    <p>Sinalize o Polo-PR para que as informações sejam conferidas e, posteriormente, enviadas por e-mail ao supervisor e ao polo participante.</p>
+                `
+            },
+            17: {
+                title: "Envio Malote",
+                subtitle: "Fase 4: Logística Física",
+                text: `
+                    <h3 style="color: var(--senac-dark-blue); font-size: 1.1rem; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Encaminhamento de documentos para fechamento mensal</h3>
+                    <p style="margin-bottom: 20px;">Ao finalizar todos os processos citados anteriormente, para o fechamento do mês, o polo atuante deverá encaminhar de forma física todos os documentos utilizados durante as visitas, para fins de arquivamento, seguindo as etapas abaixo:</p>
+                    
+                    <div style="background-color: #f8fafc; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px;">
+                            <div style="background: var(--senac-orange); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; font-weight: bold;">1</div>
+                            <div>
+                                <strong style="color: var(--senac-blue); display: block; margin-bottom: 5px;">Conferência da documentação:</strong>
+                                <p style="font-size: 0.95rem; color: #4b5563;">Certifique-se de que todos os documentos estejam completos, devidamente preenchidos e assinados.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <div style="background: var(--senac-orange); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; font-weight: bold;">2</div>
+                            <div>
+                                <strong style="color: var(--senac-blue); display: block; margin-bottom: 5px;">Envio da documentação:</strong>
+                                <p style="font-size: 0.95rem; color: #4b5563;">Encaminhe os documentos via malote para <strong>Senac Portão (Curitiba)</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #eff6ff; border-left: 4px solid var(--senac-blue); padding: 15px; border-radius: 4px;">
+                        <p style="font-size: 0.9rem; color: #1e3a8a; margin: 0;">
+                            <i class="fas fa-user-tag" style="margin-right: 8px;"></i>
+                            <strong>Aos cuidados de:</strong> Michel Vieira Farias – EAD.
+                        </p>
+                    </div>
+                `
+            },
+            18: {
                 title: "Conclusão do Ciclo",
                 subtitle: "Fase 4: Fechamento",
                 text: "Com todos os passos anteriores concluídos, sinalize ao Polo-PR o fechamento do ciclo de visitas do mês. O processo está finalizado!"
@@ -1243,7 +1388,8 @@
             if (data) {
                 document.getElementById('step-modal-title').innerText = data.title;
                 document.getElementById('step-modal-subtitle').innerText = data.subtitle;
-                document.getElementById('step-modal-content').innerText = data.text;
+                // ALTERADO DE innerText PARA innerHTML PARA PERMITIR FORMATAÇÃO
+                document.getElementById('step-modal-content').innerHTML = data.text;
                 
                 document.getElementById('step-detail-modal').classList.add('active');
             }
