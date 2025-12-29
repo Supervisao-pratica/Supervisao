@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Portal do Supervisor da Prática - Senac PR</title>
+    <!-- ATUALIZADO: Título da Página -->
+    <title>Portal da Supervisão da Prática - Senac PR</title>
     
     <!-- Ícones (FontAwesome) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -98,6 +99,7 @@
         .nav-content { display: flex; justify-content: space-between; align-items: center; height: 80px; }
         .logo-area { display: flex; align-items: center; }
         .logo-area img { height: 40px; margin-right: 15px; }
+        /* ATUALIZADO: Nome do Portal */
         .logo-text { font-size: 1.125rem; font-weight: bold; color: var(--senac-blue); border-left: 1px solid #ddd; padding-left: 15px; }
         .nav-links { display: flex; gap: 5px; }
         .nav-btn { padding: 26px 15px; font-weight: 600; color: #6b7280; border-bottom: 3px solid transparent; transition: all 0.3s; }
@@ -519,7 +521,8 @@
                 <div class="logo-area">
                     <a href="#" onclick="switchTab('boas-vindas')" style="display: flex; align-items: center;">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Senac_logo.svg" alt="Logo">
-                        <span class="logo-text">Portal do Supervisor</span>
+                        <!-- ATUALIZADO: Texto do Logo -->
+                        <span class="logo-text">Portal da Supervisão</span>
                     </a>
                 </div>
                 <div class="nav-links">
@@ -827,33 +830,32 @@
                 </div>
             </div>
 
-            <!-- ABA: DADOS (DASHBOARD) - RESTAURADA PARA O TAMANHO ANTERIOR -->
+            <!-- ABA: DADOS (DASHBOARD) - ATUALIZADO PARA SITE GITHUB -->
             <div id="view-dados" class="hidden-section">
                 <div class="welcome-card" style="text-align: center;">
                     <i class="fas fa-chart-pie" style="font-size: 4rem; color: var(--senac-blue); margin-bottom: 20px;"></i>
-                    <h2 style="color: var(--senac-dark-blue); margin-bottom: 10px;">Painel de Dados</h2>
-                    <p style="color: #666; margin-bottom: 30px;">Total de Jovens Ativos por Região</p>
+                    <h2 style="color: var(--senac-dark-blue); margin-bottom: 10px;">Painel de Dados Gerais</h2>
+                    <p style="color: #666; margin-bottom: 30px;">Visão geral e indicadores de supervisão.</p>
                     
-                    <!-- ÁREA DE INCORPORAÇÃO (IFRAME) - Restaurado para 604x384 e sem os parâmetros de recorte -->
+                    <!-- ÁREA DE INCORPORAÇÃO (IFRAME) -->
                     <div style="display: flex; justify-content: center; overflow: hidden; background: #fafafa; border-radius: 8px; border: 1px solid #eee; padding: 20px;">
                         <iframe 
-                            width="604" 
-                            height="384" 
+                            width="100%" 
+                            height="600" 
                             frameborder="0" 
-                            scrolling="no" 
-                            src="https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={8f2f76bc-bce9-4d13-9a15-4e652295c5d4}&action=embedview&wdAllowInteractivity=False&Item=Gr%C3%A1fico%201&wdHideSheetTabs=True"
-                            style="max-width: 100%;">
+                            src="https://supervisao-pratica.github.io/Dados-Gerais/"
+                            style="max-width: 100%; border: none;">
                         </iframe>
                     </div>
 
-                    <!-- BOTÃO DE EMERGÊNCIA / PLANO B -->
+                    <!-- BOTÃO PARA ACESSAR O SITE -->
                     <div style="display: flex; justify-content: center; margin-top: 25px; border-top: 1px solid #ddd; padding-top: 20px;">
                         <div style="max-width: 600px;">
                             <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
-                                <i class="fas fa-info-circle"></i> O gráfico não apareceu? Pode ser necessário permissão de acesso.
+                                <i class="fas fa-external-link-alt"></i> Prefere visualizar em tela cheia?
                             </p>
-                            <a href="https://senacpr-my.sharepoint.com/personal/michel_farias_pr_senac_br/_layouts/15/Doc.aspx?sourcedoc={8f2f76bc-bce9-4d13-9a15-4e652295c5d4}&action=embedview&wdAllowInteractivity=False&Item=Gr%C3%A1fico%201" target="_blank" class="btn-primary" style="display: inline-flex; width: auto; padding: 10px 25px; background-color: var(--senac-blue);">
-                                <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i> Abrir Gráfico em Nova Guia
+                            <a href="https://supervisao-pratica.github.io/Dados-Gerais/" target="_blank" class="btn-primary" style="display: inline-flex; width: auto; padding: 10px 25px; background-color: var(--senac-blue);">
+                                <i class="fas fa-chart-line" style="margin-right: 8px;"></i> Acessar Site de Dados
                             </a>
                         </div>
                     </div>
