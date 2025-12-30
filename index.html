@@ -104,6 +104,9 @@
         .nav-btn:hover { color: var(--senac-blue); }
         .nav-btn.active { color: var(--senac-blue); border-bottom-color: var(--senac-orange); }
         
+        /* Classe utilitária para esconder elementos baseado no login */
+        .admin-only { display: none; }
+
         .navbar-actions { display: flex; align-items: center; gap: 10px; }
         .blackboard-btn { background-color: var(--senac-blue); color: white; padding: 10px 20px; border-radius: 6px; font-weight: 500; font-size: 0.875rem; transition: background 0.3s; }
         .blackboard-btn:hover { background-color: var(--senac-dark-blue); }
@@ -527,6 +530,8 @@
                     <button onclick="switchTab('boas-vindas')" id="btn-boas-vindas" class="nav-btn active">Boas-Vindas</button>
                     <!-- REORDENADO: DADOS ANTES DE FLUXOGRAMA -->
                     <button onclick="switchTab('dados')" id="btn-dados" class="nav-btn">Dados</button>
+                    <!-- NOVA ABA: RATEIO (COM CLASSE DE CONTROLE) -->
+                    <button onclick="switchTab('rateio')" id="btn-rateio" class="nav-btn admin-only">Rateio</button>
                     <button onclick="switchTab('fluxograma')" id="btn-fluxograma" class="nav-btn">Fluxograma</button>
                     <button onclick="switchTab('documentos')" id="btn-documentos" class="nav-btn">Documentos</button>
                     <button onclick="switchTab('equipe')" id="btn-equipe" class="nav-btn">Equipe</button>
@@ -540,8 +545,8 @@
             
             <div class="mobile-menu-dropdown" id="mobile-menu">
                 <button onclick="switchTab('boas-vindas')" class="mobile-link">Boas-Vindas</button>
-                <!-- REORDENADO: DADOS ANTES DE FLUXOGRAMA -->
                 <button onclick="switchTab('dados')" class="mobile-link">Dados</button>
+                <button onclick="switchTab('rateio')" class="mobile-link admin-only" id="mobile-btn-rateio">Rateio</button>
                 <button onclick="switchTab('fluxograma')" class="mobile-link">Fluxograma</button>
                 <button onclick="switchTab('documentos')" class="mobile-link">Documentos</button>
                 <button onclick="switchTab('equipe')" class="mobile-link">Equipe</button>
@@ -817,7 +822,7 @@
                     <div class="empty-space"></div>
                 </div>
 
-                <!-- ETAPA 18: CONCLUSÃO (ANTIGA 17 - MOVIDA PARA DIREITA) ATUALIZADO NO HTML -->
+                <!-- ETAPA 18: CONCLUSÃO - ATUALIZADA COM BOTÃO -->
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number bg-green">18</div>
@@ -825,6 +830,11 @@
                         <h3>Conclusão</h3>
                         <p>Sinalizar ao Senac Portão - PR.</p>
                         <p style="color: var(--senac-green); font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-top: 5px;">Processo Finalizado</p>
+                        
+                        <!-- NOVO BOTÃO DE CONCLUSÃO -->
+                        <button onclick="finishProcess(); event.stopPropagation();" class="link-btn" style="color: white; background-color: var(--whatsapp-green); margin-top: 15px; width: 100%; justify-content: center;">
+                            <i class="fab fa-whatsapp" style="margin-right: 5px;"></i> Informar Conclusão
+                        </button>
                     </div>
                 </div>
             </div>
@@ -859,6 +869,52 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <!-- NOVA ABA: RATEIO (COM SENHA) -->
+            <div id="view-rateio" class="hidden-section">
+                <div class="welcome-card" style="text-align: center;">
+                    <!-- CONTEÚDO BLOQUEADO (FORMULÁRIO DE SENHA) -->
+                    <div id="rateio-lock-screen" style="max-width: 400px; margin: 0 auto; padding: 40px 0;">
+                        <i class="fas fa-lock" style="font-size: 4rem; color: var(--senac-orange); margin-bottom: 20px;"></i>
+                        <h2 style="color: var(--senac-dark-blue); margin-bottom: 10px;">Área Restrita: Rateio</h2>
+                        <p style="color: #666; margin-bottom: 30px;">Esta seção contém informações financeiras confidenciais. Por favor, insira a senha de acesso.</p>
+                        
+                        <form onsubmit="event.preventDefault(); checkRateioPassword();">
+                            <div class="password-container">
+                                <input type="password" id="rateio-password" class="password-input" placeholder="Senha do rateio..." required style="text-align: center;">
+                                <div id="rateio-error" class="error-msg" style="justify-content: center;"><i class="fas fa-exclamation-circle"></i> Senha incorreta.</div>
+                            </div>
+                            <button type="submit" class="btn-primary" style="background-color: var(--senac-blue);">
+                                <i class="fas fa-key"></i> Desbloquear Acesso
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- CONTEÚDO DESBLOQUEADO (IFRAME) -->
+                    <div id="rateio-content" style="display: none;">
+                        <h2 style="color: var(--senac-blue); margin-bottom: 10px;">Controle de Rateio</h2>
+                        <p style="color: #666; margin-bottom: 20px;">Painel financeiro de distribuição de custos.</p>
+                        
+                        <div style="display: flex; justify-content: center; overflow: hidden; background: #fafafa; border-radius: 8px; border: 1px solid #eee; padding: 20px;">
+                            <iframe 
+                                width="100%" 
+                                height="800" 
+                                frameborder="0" 
+                                src="https://supervisao-pratica.github.io/Rateio/"
+                                style="max-width: 100%; border: none;">
+                            </iframe>
+                        </div>
+
+                         <div style="display: flex; justify-content: center; margin-top: 25px; border-top: 1px solid #ddd; padding-top: 20px;">
+                            <div style="max-width: 600px;">
+                                <a href="https://supervisao-pratica.github.io/Rateio/" target="_blank" class="btn-primary" style="display: inline-flex; width: auto; padding: 10px 25px; background-color: var(--senac-green);">
+                                    <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i> Abrir em Nova Aba
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1132,13 +1188,26 @@
         const body = document.getElementById('main-body');
         const passwordInput = document.getElementById('password-input');
         const errorMsg = document.getElementById('error-msg');
-        const SENHA_CORRETA = "senac2026";
+        
+        // SENHAS E PAPEIS
+        const PASS_USER = "senac2026";
+        const PASS_ADMIN = "admin2026";
+        
+        // VARIÁVEIS PARA A ABA RATEIO
+        let rateioUnlocked = false;
 
         function checkPassword() {
-            if (passwordInput.value.toUpperCase() === SENHA_CORRETA.toUpperCase()) {
-                localStorage.setItem('senac_auth', 'true');
+            const inputVal = passwordInput.value.toUpperCase();
+            
+            if (inputVal === PASS_USER.toUpperCase()) {
+                localStorage.setItem('senac_auth', 'user');
                 showContent();
-            } else {
+            } 
+            else if (inputVal === PASS_ADMIN.toUpperCase()) {
+                localStorage.setItem('senac_auth', 'admin');
+                showContent();
+            } 
+            else {
                 errorMsg.style.display = 'flex';
                 passwordInput.classList.add('error');
                 passwordInput.value = '';
@@ -1146,11 +1215,47 @@
             }
         }
         passwordInput.addEventListener('input', () => { errorMsg.style.display = 'none'; passwordInput.classList.remove('error'); });
+        
+        // FUNÇÃO DE SEGURANÇA PARA ABA RATEIO
+        function checkRateioPassword() {
+            const rateioInput = document.getElementById('rateio-password');
+            const rateioError = document.getElementById('rateio-error');
+            
+            if (rateioInput.value === "rateio2026") {
+                rateioUnlocked = true;
+                document.getElementById('rateio-lock-screen').style.display = 'none';
+                document.getElementById('rateio-content').style.display = 'block';
+            } else {
+                rateioError.style.display = 'flex';
+                rateioInput.classList.add('error');
+                rateioInput.value = '';
+                rateioInput.focus();
+            }
+        }
+        document.getElementById('rateio-password').addEventListener('input', () => { 
+            document.getElementById('rateio-error').style.display = 'none'; 
+            document.getElementById('rateio-password').classList.remove('error'); 
+        });
 
         function showContent() {
             loginScreen.style.display = 'none';
             siteContent.classList.remove('hidden-section');
             body.classList.remove('locked');
+            
+            // VERIFICA PERMISSÕES E ESCONDE/MOSTRA ABA RATEIO
+            const role = localStorage.getItem('senac_auth');
+            const adminElements = document.querySelectorAll('.admin-only');
+            
+            if (role === 'admin') {
+                adminElements.forEach(el => el.style.display = 'block');
+                // Auto desbloqueia a tela interna de senha do rateio se for admin? 
+                // A lógica atual apenas mostra a ABA. O usuário Admin ainda precisará digitar a senha interna, 
+                // a menos que queiramos auto-liberar. Vamos manter a senha interna por segurança extra,
+                // já que o pedido foi focado na visibilidade da aba.
+            } else {
+                adminElements.forEach(el => el.style.display = 'none');
+            }
+
             switchTab('boas-vindas');
             document.getElementById('chatbot-trigger').style.display = 'flex'; // Exibe o chat apenas pós login
         }
@@ -1161,7 +1266,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            if (localStorage.getItem('senac_auth') === 'true') { 
+            if (localStorage.getItem('senac_auth')) { 
                 showContent(); 
             } else { 
                 passwordInput.focus(); 
@@ -1170,28 +1275,58 @@
         });
 
         function switchTab(tabName) {
-            ['boas-vindas', 'fluxograma', 'dados', 'documentos', 'equipe'].forEach(tab => {
-                document.getElementById('view-' + tab).classList.add('hidden-section');
-                document.getElementById('btn-' + tab).classList.remove('active');
+            ['boas-vindas', 'fluxograma', 'dados', 'rateio', 'documentos', 'equipe'].forEach(tab => {
+                const view = document.getElementById('view-' + tab);
+                const btn = document.getElementById('btn-' + tab);
+                if(view) view.classList.add('hidden-section');
+                if(btn) btn.classList.remove('active');
             });
+            
             document.getElementById('view-' + tabName).classList.remove('hidden-section');
-            document.getElementById('btn-' + tabName).classList.add('active');
+            const activeBtn = document.getElementById('btn-' + tabName);
+            if(activeBtn) activeBtn.classList.add('active');
             
             const titles = {
                 'boas-vindas': ["Bem-Vindo(a) Supervisor(a)!", "Portal de apoio para a supervisão da Prática Profissional do Senac PR."],
                 'fluxograma': ["Fluxo de Monitoramento", "Guia oficial para supervisão de práticas profissionais - Senac PR"],
                 'dados': ["Painel de Dados", "Monitoramento em tempo real dos indicadores de aprendizagem."],
+                'rateio': ["Controle de Rateio", "Área restrita para gestão financeira de custos."],
                 'documentos': ["Central de Documentos", "Baixe todos os arquivos necessários."],
                 'equipe': ["Equipe Técnica", "Contatos e responsáveis pedagógicos."]
             };
             document.getElementById('hero-title').innerText = titles[tabName][0];
             document.getElementById('hero-subtitle').innerText = titles[tabName][1];
             document.getElementById('mobile-menu').style.display = 'none';
+            
+            // SE A ABA FOR RATEIO, FOCA NO INPUT SE NÃO ESTIVER DESBLOQUEADO
+            if (tabName === 'rateio' && !rateioUnlocked) {
+                setTimeout(() => {
+                    const passInput = document.getElementById('rateio-password');
+                    if(passInput) passInput.focus();
+                }, 100);
+            }
         }
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // --- FUNÇÃO PARA FINALIZAR PROCESSO (ETAPA 18) ---
+        function finishProcess() {
+            const nome = prompt("Por favor, digite seu nome para registrar a conclusão:");
+            
+            if (nome && nome.trim() !== "") {
+                const phone = "554133145817";
+                const text = `Olá, sou ${nome}, gostaria de informar que o processo de visita foi concluído.`;
+                
+                // Cria o link do WhatsApp API
+                // window.open abre uma nova aba que disparará o app ou web whatsapp
+                const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+                window.open(url, '_blank');
+            } else if (nome !== null) {
+                alert("É necessário informar um nome para prosseguir.");
+            }
         }
 
         function filterDocuments() {
