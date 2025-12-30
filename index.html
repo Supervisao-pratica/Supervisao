@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- ATUALIZADO: Título da Página -->
     <title>Portal da Supervisão da Prática - Senac PR</title>
     
     <!-- Ícones (FontAwesome) -->
@@ -99,7 +98,6 @@
         .nav-content { display: flex; justify-content: space-between; align-items: center; height: 80px; }
         .logo-area { display: flex; align-items: center; }
         .logo-area img { height: 40px; margin-right: 15px; }
-        /* ATUALIZADO: Nome do Portal */
         .logo-text { font-size: 1.125rem; font-weight: bold; color: var(--senac-blue); border-left: 1px solid #ddd; padding-left: 15px; }
         .nav-links { display: flex; gap: 5px; }
         .nav-btn { padding: 26px 15px; font-weight: 600; color: #6b7280; border-bottom: 3px solid transparent; transition: all 0.3s; }
@@ -685,8 +683,9 @@
                     <div class="step-number bg-orange">6</div>
                     <div class="step-content border-right-blue" onclick="openStepInfo(6)"><h3>Montar Logística</h3><p>Montar logística na aba de planejamento.</p></div>
                 </div>
+                <!-- PASSO 7 ATUALIZADO NO HTML -->
                 <div class="timeline-step">
-                    <div class="step-content border-left-orange" onclick="openStepInfo(7)"><h3>Aprovação</h3><p>Avisar ao Polo-PR e aguardar.</p></div>
+                    <div class="step-content border-left-orange" onclick="openStepInfo(7)"><h3>Aprovação</h3><p>Avisar ao Senac Portão - PR e aguardar.</p></div>
                     <div class="step-number">7</div> 
                     <div class="empty-space"></div>
                 </div>
@@ -818,13 +817,13 @@
                     <div class="empty-space"></div>
                 </div>
 
-                <!-- ETAPA 18: CONCLUSÃO (ANTIGA 17 - MOVIDA PARA DIREITA) -->
+                <!-- ETAPA 18: CONCLUSÃO (ANTIGA 17 - MOVIDA PARA DIREITA) ATUALIZADO NO HTML -->
                 <div class="timeline-step">
                     <div class="empty-space"></div>
                     <div class="step-number bg-green">18</div>
                     <div class="step-content border-right-orange" style="background-color: #eff6ff;" onclick="openStepInfo(18)">
                         <h3>Conclusão</h3>
-                        <p>Sinalizar ao Polo-PR.</p>
+                        <p>Sinalizar ao Senac Portão - PR.</p>
                         <p style="color: var(--senac-green); font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-top: 5px;">Processo Finalizado</p>
                     </div>
                 </div>
@@ -1430,7 +1429,7 @@
             7: {
                 title: "Aprovação da Agenda",
                 subtitle: "Fase 2: Validação",
-                text: "Após montar o roteiro preliminar, sinalize para o Polo-PR e Polo atuante e aguarde o 'De Acordo' antes de prosseguir com as visitas."
+                text: "Após montar o roteiro preliminar, sinalize para o Senac Portão - PR e Polo atuante e aguarde o 'De Acordo' antes de prosseguir com as visitas."
             },
             8: {
                 title: "Abertura de Viagem",
@@ -1498,7 +1497,7 @@
                     </div>
 
                     <p style="margin-top: 20px;"><strong>Após concluir o preenchimento:</strong></p>
-                    <p>Sinalize o Polo-PR para que as informações sejam conferidas e, posteriormente, enviadas por e-mail ao supervisor e ao polo participante.</p>
+                    <p>Sinalize o Senac Portão - PR para que as informações sejam conferidas e, posteriormente, enviadas por e-mail ao supervisor e ao polo participante.</p>
                 `
             },
             17: {
@@ -1537,7 +1536,7 @@
             18: {
                 title: "Conclusão do Ciclo",
                 subtitle: "Fase 4: Fechamento",
-                text: "Com todos os passos anteriores concluídos, sinalize ao Polo-PR o fechamento do ciclo de visitas do mês. O processo está finalizado!"
+                text: "Com todos os passos anteriores concluídos, sinalize ao Senac Portão - PR o fechamento do ciclo de visitas do mês. O processo está finalizado!"
             }
         };
 
@@ -1594,7 +1593,8 @@
                     { id: 'prazos', text: 'Prazos e Entregas' },
                     { id: 'fluxo', text: 'Fluxograma' },
                     { id: 'contatos', text: 'Contatos da Equipe' },
-                    { id: 'humano', text: 'Falar com Humano' }
+                    { id: 'update_sup', text: 'Atualização Supervisor' },
+                    { id: 'humano', text: 'Falar com Suporte' }
                 ]);
             }, 800);
         }
@@ -1706,6 +1706,14 @@
                     chatBody.appendChild(contactsDiv);
                     // Retorna após mostrar contatos, mas oferece menu novamente após um tempo
                 }
+                else if (id === 'update_sup') {
+                    addMessage('Abrindo seu gerenciador de e-mails com os dados para envio...', 'bot');
+                    const email = "cristina.maciel@pr.senac.br";
+                    const subject = "Atualização Cadastral Supervisor Empresa";
+                    const body = `Solicitamos, por gentileza, os dados da nova supervisão responsável pela(o) jovem aprendiz:%0D%0A%0D%0ADados da Supervisão%0D%0A%0D%0ANome completo:%0D%0ACPF:%0D%0ATelefone fixo:%0D%0ATelefone celular:%0D%0AE-mail:%0D%0A%0D%0AApós o envio das informações, será solicitado o acesso à Plataforma Blackboard – Canal do Supervisor, meio pelo qual são enviados os documentos de acompanhamento dos jovens aprendizes.`;
+                    
+                    window.open(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${body}`, '_blank');
+                }
                 else if (id === 'fluxo') {
                     addMessage('O Fluxograma é o guia oficial. Sobre qual fase você tem dúvida?', 'bot');
                     showOptions([
@@ -1782,6 +1790,7 @@
                         { id: 'docs', text: 'Documentos' },
                         { id: 'fluxo', text: 'Fluxograma' },
                         { id: 'contatos', text: 'Contatos' },
+                        { id: 'update_sup', text: 'Atualização Supervisor' },
                         { id: 'humano', text: 'Suporte' }
                     ]);
                 }, 2500);
